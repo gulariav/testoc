@@ -115,7 +115,35 @@ require( trailingslashit( get_template_directory() ) . 'option-tree/ot-loader.ph
 add_filter( 'ot_theme_mode', '__return_true' );
 add_filter( 'ot_show_new_layout', '__return_false' );
 add_filter('ot_theme_options_parent_slug', '__return_false');
-//add_filter( 'ot_show_pages', '__return_false' ); //Hide Option tree Setting page
+add_filter( 'ot_show_pages', '__return_false' ); //Hide Option tree Setting page
+
+
+function custom_theme_options_page_priority() {
+    return 999;
+}
+add_filter('ot_admin_menu_priority', 'custom_theme_options_page_priority');
+
+function create_pcs_admin_bar_menu() {
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+	global $wp_admin_bar;
+
+	$menu_id = 'pcs-theme-options';
+	$wp_admin_bar->add_menu(array(
+		'id' => $menu_id, 
+		'title' => __('Theme Options'), 
+		'href' => admin_url('admin.php?page=ot-theme-options')
+	));
+}
+add_action('admin_bar_menu', 'create_pcs_admin_bar_menu', 999);
+
+/**
+ * Theme Options
+ */
+require( trailingslashit( get_template_directory() ) . 'inc/theme-options.php' );
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
