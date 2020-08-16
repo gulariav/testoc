@@ -115,6 +115,8 @@
                                   <h2>'.$slide['title'].'</h2>
                                   <p>'.$slide['description'].'</p>';
 
+                            echo '<div class="clear"></div>';  
+
                             if(!empty($slide['link']))    
                             echo '<a href="'.$slide['link'].'" class="btn" aria-label="Learn more about '.$slide['title'].'">Read More</a>';
 
